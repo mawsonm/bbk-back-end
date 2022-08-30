@@ -1,6 +1,7 @@
 package com.bribri.kitchen.dto;
 
 import com.bribri.kitchen.entity.Category;
+import com.bribri.kitchen.entity.Recipe;
 
 public class RecipeGridDto {
     public int getId() {
@@ -65,5 +66,14 @@ public class RecipeGridDto {
         this.imageUrl = imageUrl;
         this.category = category;
         this.description = description;
+    }
+
+    public RecipeGridDto(Recipe recipe){
+        this.id = recipe.getId();
+        this.name = recipe.getName();
+        this.favoriteInd = recipe.isFavoriteInd();
+        this.imageUrl = recipe.getImageUrl();
+        this.category = recipe.getCategory();
+        this.description = recipe.getDescription();
     }
 }

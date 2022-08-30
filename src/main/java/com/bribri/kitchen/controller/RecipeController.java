@@ -1,6 +1,7 @@
 package com.bribri.kitchen.controller;
 
 import com.bribri.kitchen.dao.*;
+import com.bribri.kitchen.dto.RecipeGridDto;
 import com.bribri.kitchen.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -8,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.sql.Array;
 import java.util.*;
 
 @RestController
@@ -22,6 +24,8 @@ public class RecipeController {
     @Autowired
     IngredientRepository ingredientRepository;
 
+    @Autowired
+    CategoryRepository categoryRepository;
 
     @Transactional
     @PostMapping(path="recipe", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -84,6 +88,29 @@ public class RecipeController {
         }
         recipeFromDB.setIngredients(recipe.getIngredients());
         return recipeRepository.save(recipeFromDB);
+    }
+
+    @GetMapping(path="recipe")
+    public List<RecipeGridDto> findRecipeByName(@Param("name") String name){
+        List<Recipe> recipes = recipeRepository.findByNameContaining(name);
+        return transformRecipes(recipes);
+    }
+
+    @GetMapping(path="recipe/category")
+    public List<RecipeGridDto> findRecipeByCategoryName(@Param("name") String name){
+        System.out.println(name);
+        Category category = categoryRepository.findByName(name);
+        List<Recipe> recipes = recipeRepository.findByCategory(category);
+
+        return transformRecipes(recipes);
+    }
+
+    private List<RecipeGridDto> transformRecipes(List<Recipe> recipes){
+        List<RecipeGridDto> recipesGrid = new ArrayList<>();
+        for(Recipe recipe : recipes){
+            recipesGrid.add(new RecipeGridDto(recipe));
+        }
+        return recipesGrid;
     }
 
 }
