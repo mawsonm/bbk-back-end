@@ -3,6 +3,7 @@ package com.bribri.kitchen.controller;
 import com.bribri.kitchen.dao.*;
 import com.bribri.kitchen.dto.RecipeGridDto;
 import com.bribri.kitchen.entity.*;
+import com.sun.xml.bind.v2.runtime.unmarshaller.XsiNilLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import java.sql.Array;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @RestController
 public class RecipeController {
@@ -103,6 +106,27 @@ public class RecipeController {
         List<Recipe> recipes = recipeRepository.findByCategory(category);
 
         return transformRecipes(recipes);
+    }
+
+    @GetMapping(path="recipe/ingredient")
+    public Set<RecipeGridDto> findRecipeByIngredients(@Param("name") String name){
+        String[] ingredients = name.split(",");
+        Set<Recipe> recipeSet = new HashSet<>();
+        List<Recipe> recipeList = new ArrayList<>();
+        for(String ingredient : ingredients){
+            List<Ingredient> ingredientsFromDB = ingredientRepository.findByNameContainingIgnoringCase(ingredient);
+            List<Recipe> recipes = ingredientsFromDB.stream().map(Ingredient::getRecipe).collect(Collectors.toList());
+            recipeSet.addAll(recipes);
+            recipeList.addAll(recipes);
+        }
+        Set<RecipeGridDto> gridRecipes = new HashSet<>();
+        for(Recipe recipe : recipeSet){
+            List<Integer> numOccurences = IntStream.range(0, recipeList.size())
+                    .filter(i -> Objects.equals(recipe, recipeList.get(i))).boxed().collect(Collectors.toList());
+            RecipeGridDto gridDto = new RecipeGridDto(recipe, numOccurences.size(), recipe.getIngredients().size());
+            gridRecipes.add(gridDto);
+        }
+        return gridRecipes;
     }
 
     private List<RecipeGridDto> transformRecipes(List<Recipe> recipes){

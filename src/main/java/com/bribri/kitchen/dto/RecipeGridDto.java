@@ -19,6 +19,27 @@ public class RecipeGridDto {
     private Category category;
     private String description;
 
+    private int numIngredients;
+
+    private int totalIngredients;
+
+    public int getTotalIngredients() {
+        return totalIngredients;
+    }
+
+    public void setTotalIngredients(int totalIngredients) {
+        this.totalIngredients = totalIngredients;
+    }
+
+
+    public int getNumIngredients() {
+        return numIngredients;
+    }
+
+    public void setNumIngredients(int numIngredients) {
+        this.numIngredients = numIngredients;
+    }
+
     public String getName() {
         return name;
     }
@@ -75,5 +96,16 @@ public class RecipeGridDto {
         this.imageUrl = recipe.getImageUrl();
         this.category = recipe.getCategory();
         this.description = recipe.getDescription();
+    }
+
+    public RecipeGridDto(Recipe recipe, int numIngredients, int totalIngredients){
+        this.id = recipe.getId();
+        this.name = recipe.getName();
+        this.favoriteInd = recipe.isFavoriteInd();
+        this.imageUrl = recipe.getImageUrl();
+        this.category = recipe.getCategory();
+        this.description = recipe.getDescription();
+        this.numIngredients = numIngredients;
+        this.totalIngredients = totalIngredients;
     }
 }

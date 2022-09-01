@@ -50,4 +50,18 @@ public class Recipe {
 
     public Recipe() {
     }
+
+    @Override
+    public String toString() {
+        return "Recipe{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", favoriteInd=" + favoriteInd +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", category=" + category +
+                ", steps=" + steps +
+                ", ingredients=" + ingredients +
+                '}';
+    }
 }
