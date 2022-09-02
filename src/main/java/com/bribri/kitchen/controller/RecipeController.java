@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import javax.websocket.server.PathParam;
 import java.sql.Array;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -33,7 +34,7 @@ public class RecipeController {
     @Transactional
     @PostMapping(path="recipe", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Recipe addRecipe(@RequestBody Recipe recipe) {
-            Recipe recipeDto = new Recipe(recipe.getName(), recipe.getDescription(), recipe.isFavoriteInd(), recipe.getImageUrl(), recipe.getCategory());
+            Recipe recipeDto = new Recipe(recipe.getName(), recipe.getDescription(), recipe.isFavoriteInd(), recipe.getImageUrl(), recipe.getCategory(), recipe.getUser());
             Recipe rec = recipeRepository.save(recipeDto);
 
             for(Step step : recipe.getSteps()){
@@ -53,10 +54,8 @@ public class RecipeController {
     }
 
     @GetMapping("recipe/{id}")
-    public List<Recipe> findRecipes(@Param("id") Integer id){
-        if(id == null){
-            return recipeRepository.findAll();
-        }
+    public List<Recipe> findRecipes(@PathVariable("id") Integer id){
+        System.out.println(id);
         Optional<Recipe> recipe = recipeRepository.findById(id);
         if(recipe.isPresent()){
             List<Recipe> recipes = new ArrayList<>();
