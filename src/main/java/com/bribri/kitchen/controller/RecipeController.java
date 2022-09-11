@@ -16,6 +16,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+@CrossOrigin("http://localhost:4200")
 @RestController
 public class RecipeController {
 
