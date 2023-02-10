@@ -21,6 +21,9 @@ public class Recipe {
     @Column(name="name")
     private String name;
 
+    @Column(name = "time_to_cook")
+    private double timeToCook;
+
     @Column(name="description")
     private String description;
 
@@ -61,9 +64,11 @@ public class Recipe {
         return "Recipe{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", timeToCook=" + timeToCook +
                 ", description='" + description + '\'' +
                 ", favoriteInd=" + favoriteInd +
                 ", imageUrl='" + imageUrl + '\'' +
+                ", user=" + user +
                 ", category=" + category +
                 ", steps=" + steps +
                 ", ingredients=" + ingredients +
