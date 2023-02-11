@@ -23,6 +23,11 @@ public class RecipeGridDto {
 
     private int totalIngredients;
 
+    private Recipe drinkPairing;
+    public Recipe getDrinkPairing() {
+        return drinkPairing;
+    }
+
     public int getTotalIngredients() {
         return totalIngredients;
     }
@@ -96,6 +101,7 @@ public class RecipeGridDto {
         this.imageUrl = recipe.getImageUrl();
         this.category = recipe.getCategory();
         this.description = recipe.getDescription();
+        this.drinkPairing = recipe.getDrink();
     }
 
     public RecipeGridDto(Recipe recipe, int numIngredients, int totalIngredients){
@@ -105,6 +111,7 @@ public class RecipeGridDto {
         this.imageUrl = recipe.getImageUrl();
         this.category = recipe.getCategory();
         this.description = recipe.getDescription();
+        this.drinkPairing = recipe.getDrink();
         this.numIngredients = numIngredients;
         this.totalIngredients = totalIngredients;
     }

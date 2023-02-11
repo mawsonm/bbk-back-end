@@ -33,9 +33,9 @@ public class Recipe {
     @Column(name="image_url")
     private String imageUrl;
 
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name="user_id")
-    User user;
+//    @OneToOne(cascade = CascadeType.MERGE)
+//    @JoinColumn(name="user_id")
+//    User user;
 
     @OneToOne( cascade = CascadeType.MERGE)
     @JoinColumn(name="category_id")
@@ -47,13 +47,18 @@ public class Recipe {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
     private Set<Ingredient> ingredients = new HashSet<>();
 
-    public Recipe(String name, String description, boolean favoriteInd, String imageUrl, Category category, User user) {
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name="drink_pairing_id")
+    Recipe drink;
+
+    public Recipe(String name, String description, boolean favoriteInd, String imageUrl, Category category, Recipe drink) {
         this.name = name;
         this.description = description;
         this.favoriteInd = favoriteInd;
         this.imageUrl = imageUrl;
         this.category = category;
-        this.user = user;
+        this.drink = drink;
+        //this.user = user;
     }
 
     public Recipe() {
@@ -68,7 +73,7 @@ public class Recipe {
                 ", description='" + description + '\'' +
                 ", favoriteInd=" + favoriteInd +
                 ", imageUrl='" + imageUrl + '\'' +
-                ", user=" + user +
+//                ", user=" + user +
                 ", category=" + category +
                 ", steps=" + steps +
                 ", ingredients=" + ingredients +
