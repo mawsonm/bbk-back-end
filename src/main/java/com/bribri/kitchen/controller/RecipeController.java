@@ -34,9 +34,8 @@ public class RecipeController {
     @Transactional
     @PostMapping(path="recipe", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Recipe addRecipe(@RequestBody Recipe recipe) {
-        System.out.println(recipe.getDrink().toString());
             //List<Recipe> drinks = findRecipes(recipe.getDrink().getId());
-            Recipe recipeDto = new Recipe(recipe.getName(), recipe.getDescription(), recipe.isFavoriteInd(), recipe.getImageUrl(), recipe.getCategory(), recipe.getDrink());
+            Recipe recipeDto = new Recipe(recipe.getName(), recipe.getDescription(), recipe.isFavoriteInd(), recipe.getImageUrl(), recipe.getCategory(), recipe.getTimeToCook(), recipe.getDrinkPairing());
             Recipe rec = recipeRepository.save(recipeDto);
 
             for(Step step : recipe.getSteps()){
@@ -51,8 +50,6 @@ public class RecipeController {
 
             rec.setSteps(new HashSet<>(steps));
             rec.setIngredients(new HashSet<>(ingredients));
-            rec.getDrink().setSteps(new HashSet<>(rec.getDrink().getSteps()));
-            rec.getDrink().setIngredients(new HashSet<>(rec.getDrink().getIngredients()));
 
             return rec;
     }

@@ -15,6 +15,8 @@ public class RecipeGridDto {
     private int id;
     private String name;
     private boolean favoriteInd;
+
+    private double timeToCook;
     private String imageUrl;
     private Category category;
     private String description;
@@ -85,6 +87,18 @@ public class RecipeGridDto {
         this.description = description;
     }
 
+    public double getTimeToCook() {
+        return timeToCook;
+    }
+
+    public void setTimeToCook(double timeToCook) {
+        this.timeToCook = timeToCook;
+    }
+
+    public void setDrinkPairing(Recipe drinkPairing) {
+        this.drinkPairing = drinkPairing;
+    }
+
     public RecipeGridDto(int id, String name, boolean favoriteInd, String imageUrl, Category category, String description) {
         this.id = id;
         this.name = name;
@@ -101,7 +115,8 @@ public class RecipeGridDto {
         this.imageUrl = recipe.getImageUrl();
         this.category = recipe.getCategory();
         this.description = recipe.getDescription();
-        this.drinkPairing = recipe.getDrink();
+        this.drinkPairing = recipe.getDrinkPairing();
+        this.timeToCook = recipe.getTimeToCook();
     }
 
     public RecipeGridDto(Recipe recipe, int numIngredients, int totalIngredients){
@@ -111,8 +126,10 @@ public class RecipeGridDto {
         this.imageUrl = recipe.getImageUrl();
         this.category = recipe.getCategory();
         this.description = recipe.getDescription();
-        this.drinkPairing = recipe.getDrink();
+        this.drinkPairing = recipe.getDrinkPairing();
         this.numIngredients = numIngredients;
         this.totalIngredients = totalIngredients;
+        this.drinkPairing = recipe.getDrinkPairing();
+        this.timeToCook = recipe.getTimeToCook();
     }
 }

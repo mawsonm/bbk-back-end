@@ -49,15 +49,20 @@ public class Recipe {
 
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="drink_pairing_id")
-    Recipe drink;
+    Recipe drinkPairing;
 
-    public Recipe(String name, String description, boolean favoriteInd, String imageUrl, Category category, Recipe drink) {
+    public Recipe(String name, String description, boolean favoriteInd, String imageUrl, Category category, double timeToCook, Recipe drink) {
         this.name = name;
         this.description = description;
         this.favoriteInd = favoriteInd;
         this.imageUrl = imageUrl;
         this.category = category;
-        this.drink = drink;
+        this.timeToCook = timeToCook;
+        if(drink != null){
+            this.drinkPairing = drink;
+        }
+
+
         //this.user = user;
     }
 
