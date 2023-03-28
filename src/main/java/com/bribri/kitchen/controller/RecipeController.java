@@ -55,15 +55,13 @@ public class RecipeController {
     }
 
     @GetMapping("recipe/{id}")
-    public List<Recipe> findRecipes(@PathVariable("id") Integer id){
+    public Recipe findRecipes(@PathVariable("id") Integer id){
         System.out.println(id);
         Optional<Recipe> recipe = recipeRepository.findById(id);
         if(recipe.isPresent()){
-            List<Recipe> recipes = new ArrayList<>();
-            recipes.add(recipe.get());
-            return recipes;
+            return recipe.get();
         }
-        return new ArrayList<>();
+        return new Recipe();
     }
 
     @Transactional
@@ -97,6 +95,11 @@ public class RecipeController {
     public List<RecipeGridDto> findRecipeByName(@Param("name") String name){
         List<Recipe> recipes = recipeRepository.findByNameContainingIgnoreCase(name);
         return transformRecipes(recipes);
+    }
+
+    @GetMapping(path="recipe/all")
+    public List<RecipeGridDto> findAllRecipes(){
+        return recipeRepository.findAll().stream().map(rec -> new RecipeGridDto(rec)).collect(Collectors.toList());
     }
 
     @GetMapping(path="drink")
