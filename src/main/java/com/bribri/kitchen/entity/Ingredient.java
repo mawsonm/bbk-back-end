@@ -23,7 +23,7 @@ public class Ingredient {
     @Column(name="quantity")
     private double quantity;
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne
     @JoinColumn(name = "unit_id")
     private Unit unit;
 

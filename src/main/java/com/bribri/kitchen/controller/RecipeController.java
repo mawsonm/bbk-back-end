@@ -32,7 +32,7 @@ public class RecipeController {
     CategoryRepository categoryRepository;
 
     @Transactional
-    @PostMapping(path="recipe", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path="addRecipe", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Recipe addRecipe(@RequestBody Recipe recipe) {
             //List<Recipe> drinks = findRecipes(recipe.getDrink().getId());
             Recipe recipeDto = new Recipe(recipe.getName(), recipe.getDescription(), recipe.isFavoriteInd(), recipe.getImageUrl(), recipe.getCategory(), recipe.getTimeToCook(), recipe.getDrinkPairing());
@@ -72,9 +72,10 @@ public class RecipeController {
     }
 
     @Transactional
-    @PutMapping(path="recipe")
+    @PutMapping(path="updateRecipe")
     public Recipe updateRecipe(@RequestBody Recipe recipe){
         Recipe recipeFromDB = recipeRepository.getById(recipe.getId());
+        System.out.println(recipeFromDB.toString());
         recipeFromDB.setName(recipe.getName());
         recipeFromDB.setCategory(recipe.getCategory());
         recipeFromDB.setDescription(recipe.getDescription());
