@@ -1,0 +1,13 @@
+build:
+  docker:
+    web: Dockerfile
+
+# Optional, only if your project requires a specific stack
+# stack: container
+
+# Specify the JDK version
+jdk:
+  - openjdk11
+
+run:
+  web: java $JAVA_OPTS -Dserver.port=$PORT -jar target/your-spring-boot-app.jar
