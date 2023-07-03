@@ -5,4 +5,4 @@ build:
 # Optional, only if your project requires a specific stack
 # stack: container
 run:
-  web: java $JAVA_OPTS -Dserver.port=$PORT -jar target/your-spring-boot-app.jar
+  web: java $JAVA_OPTS -Dserver.port=$PORT -jar target/kitchen-0.0.1-SNAPSHOT.jar
